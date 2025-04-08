@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Google</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #333333;
+        }
+
+        .g_id_signin {
+            width: 100%;
+            text-align: center;
+        }
+
+        .g_id_signin button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .g_id_signin button:hover {
+            background-color: #357ae8;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #4285f4;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Entrar com o Google</h2>
+        <div id="g_id_onload" data-client_id="" data-callback="handleCredentialResponse">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
+        <div class="footer">
+            <p>Não tem uma conta? <a href="#">Criar uma!</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script src="config.js"></script>
+    <script>
+        const btn = document.querySelector("#g_id_onload")
+        btn.dataset.client_id = client_id;
+
+        function handleCredentialResponse(data) {
+
+            if (data.credential !== undefined) {
+                const name = (jwt_decode(data.credential).name);
+                localStorage.setItem("name", name);
+                location.href = "./profile.html";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
